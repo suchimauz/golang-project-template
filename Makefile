@@ -1,0 +1,17 @@
+GOOS ?= linux
+
+.PHONY:
+.SILENT:
+.DEFAULT_GOAL := run
+
+build:
+	go mod download && CGO_ENABLED=0 GOOS=$(GOOS) go build -o ./.bin/app ./cmd/app/main.go
+
+run:
+	go run ./cmd/app/main.go
+
+lint:
+	golangci-lint run
+
+env:
+	cp .env.dist .env
