@@ -9,6 +9,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8000:8000
+    volumes:
+      - ./.bin/:/root/
     env_file:
       - .env
 
