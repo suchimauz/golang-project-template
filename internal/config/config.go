@@ -3,6 +3,8 @@ package config
 import (
 	"time"
 
+	_ "time/tzdata"
+
 	"github.com/joho/godotenv"
 	"github.com/kelseyhightower/envconfig"
 )
@@ -13,8 +15,8 @@ const (
 
 type (
 	Config struct {
-		timezone string `envconfig:"app_timezone" default:"UTC"` // String timezone format
-		Timezone *time.Location
+		TimezoneString string `envconfig:"app_timezone" default:"UTC"` // String timezone format
+		Timezone       *time.Location
 	}
 )
 
@@ -30,7 +32,7 @@ func NewConfig() (*Config, error) {
 	}
 
 	// Parse timezone from cfg.tz or return err
-	cfg.Timezone, err = time.LoadLocation(cfg.timezone)
+	cfg.Timezone, err = time.LoadLocation(cfg.TimezoneString)
 	if err != nil {
 		return nil, err
 	}
